@@ -9,10 +9,10 @@ front end - Andrew
     -delete/delete
     -use effect
     -return
-        -title
-        -name of location
-        -picture of location
-        -tourist rating
+        -page header 
+        -name of meal
+        -picture of meal
+        -nutritional value
         -info
     components: 
         Food.js
