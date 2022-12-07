@@ -1,29 +1,21 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios'
-import './App.css';
+import Add from './components/Add.js'
 
 const App = () => {
-  const testFood = [
-    {
-      name: "Burger",
-      image: "",
-      nutritionalValue: "Good",
-      info: "i love burgers, so yummy"
-    },
-    {
-      name: "Fried Chicken",
-      image: "",
-      nutritionalValue: "Bad",
-      info: "fried chicken is tasty but bad for your health. Can only eat it once in a while"
-    }
-  ]
-  const [foods, setFoods] = useState(testFood)
+  const [foods, setFoods] = useState([])
   const [addFood, setAddFood] = useState(false)
 
+  const getFoods = () => {
+    axios.get("http://localhost:3000/foods")
+    .then((response) => setFoods(response.data))
+    .catch(error => console.log(error))
+  }
+
   const handleCreate = (data) => {
-    axios.post("http://localhost:3000/", data)
+    axios.post("http://localhost:3000/foods", data)
     .then((response) => {
-      console.log(response)
+      console.log(response.data)
       let newFoods = [...foods, response.data]
       setFoods(newFoods)
     })
@@ -34,10 +26,14 @@ const App = () => {
     setAddFood(a => !a)
   }
 
+  useEffect(() => {
+    getFoods()
+  }, [])
+
   return (
     <>
       <h1>Food Cataloger App</h1>
-      <button onClick={toggleAddFood}>Add Meal</button>
+      <button onClick={toggleAddFood}>Add Food</button>
       {
         addFood ? <Add handleCreate={handleCreate}/> : null
       }
