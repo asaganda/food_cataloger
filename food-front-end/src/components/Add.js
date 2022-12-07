@@ -12,40 +12,58 @@ const Add = (props) => {
         }
     })
 
-    const handleChange = (e) => {
-        const { name, value } = e.target
-        
-        switch(name) {
-            case "name":
-            case "ingredients":
-                setFood({...food, [name]: value})
-                break;
-            case "carbs":
-            case "fat":
-            case "protein":
-            case "calories":
-                setFood((food) => ({ 
-                    macros: {
-                        ...food.macros, 
-                        [name]: value 
-                    } 
-                }))
-                break;
-            default:
-                console.log('i shouldnt see this message')
-            }
-        // setFood({
-        //     ...food, 
-        //     [event.target.name]: event.target.value
-        // })
-    }
-
-    // const handleMacroChange = (event) => {
-    //     setFood({
-    //         ...food.macros,
-    //         [event.target.name]: event.target.value
-    //     })
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target
+    //     let test = {
+    //         ...food
+    //     }
+    //     switch(name) {
+    //         case "name":
+    //         case "ingredients":
+    //             test = {
+    //                         ...food,
+    //                         [name]: value
+    //                     }
+    //             break;
+    //         case "carbs":
+    //         case "fat":
+    //         case "protein":
+    //         case "calories":
+    //             test = {
+    //                     ...food,
+    //                     macros: {
+    //                         ...food.macros,
+    //                         [name]: value
+    //                     }
+    //                 }
+    //             break;
+    //         default:
+    //             console.log('i shouldnt see this message')
+    //         }
+    //     setFood(test)
     // }
+    const handleChange = (e) => {
+        let test = {
+            ...food
+        }
+        let name = e.target.name
+        let value = e.target.value
+        if (name == "name" || name == "ingredients"){
+            test = {
+                ...food,
+                [name]: value
+            }
+        } else if (name == "carbs" || name == "fat" || name == "protein" || name == "calories") {
+            test = {
+                ...food,
+                macros: {
+                    ...food.macros,
+                    [name]: value
+                }
+            }
+        }
+        setFood(test)
+    }
 
     const handleSubmit = (event) => {
       event.preventDefault()
@@ -58,11 +76,11 @@ const Add = (props) => {
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label htmlFor='name'>Name:</label>
-                    <input type='text' name='name' onChange={handleChange}/>
+                    <input type='text' name="name" onChange={handleChange}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor='ingredients'>Ingredients:</label>
-                    <input type='text' name='ingredients' onChange={handleChange}/>
+                    <input type='text' name="ingredients" onChange={handleChange}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor='macros'>Macros:</label>
